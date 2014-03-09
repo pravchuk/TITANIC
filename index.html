@@ -5,19 +5,27 @@
 function initLayout(){
 	var c = document.getElementById('myCanvas');
 	var ctx=c.getContext("2d");
-	var imageObj = new Image();
+	var ship = new Image();
+	var iceberg = new Image();
 
-	imageObj.onload = function() {
-	  ctx.drawImage(imageObj, 120, 360);
+	ship.onload = function() {
+	  ctx.drawImage(ship, 120, 360);
 	};
-    imageObj.src = 'ship-up.png';
+	iceberg.onload = function(){
+		ctx.drawImage(iceberg,40,40,50,50);
+	};
+
+    ship.src = 'ship-up.png';
+    iceberg.src = 'iceberg.png'
+
+
 
 }
 </script>
 </head>
 <body onload="initLayout();">
 
-<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;">
+<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
 Your browser does not support the HTML5 canvas tag.
 </canvas>
 
