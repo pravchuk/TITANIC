@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+<script type="text/javascript">
+function initLayout(){
+	var c = document.getElementById('myCanvas');
+	var ctx=c.getContext("2d");
+	var imageObj = new Image();
+
+	imageObj.onload = function() {
+	  ctx.drawImage(imageObj, 120, 360);
+	};
+    imageObj.src = 'ship-up.png';
+
+}
+</script>
+</head>
+<body onload="initLayout();">
 
 <canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;">
 Your browser does not support the HTML5 canvas tag.
