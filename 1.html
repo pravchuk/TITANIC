@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<script>
+			function init()
+			{
+				c = document.getElementById('myCanvas');
+				ctx=c.getContext("2d");
+				w=300;
+				h=500;
+				ctx.fillStyle='blue';
+				ctx.fillRect(0,0,w,h)
+			}
+		
+		
+		
+		
+
+
+			ship{
+				spos:120;
+				}
+				
+			
+			iceberg{
+			
+			}
+			stream{
+				speed:2;
+				roll:function() {
+					
+					ctx.drawImage(c, 0, 0, w, h-streamspeed, 0, streamspeed, w, h-streamspeed);
+					ctx.fillRect(spos,360,200,200);
+					ctx.drawImage(ship, spos, 360);
+				}
+			}
+		</script>
+	</head>
+	<body onload="init();">
+		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+	</body>
+</html>

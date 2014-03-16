@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function initLayout(){
+	
+	k=10;
+	w=300;
+	h=500;
+	spos=120;
+	streamspeed=2;
+	var c = document.getElementById('myCanvas');
+	var ctx=c.getContext("2d");
+	ctx.fillStyle='blue';
+	ctx.fillRect(0,0,w,h)
+	var ship = new Image();
+	var iceberg = new Image();
+
+	ship.onload = function() {
+	  ctx.drawImage(ship, 120, 360);
+	};
+	iceberg.onload = function(){
+		ctx.drawImage(iceberg,40,40,50,50);
+	};
+
+		
+    ship.src = 'ship-up.png';
+    iceberg.src = 'iceberg.png'
+	
+	
+	
+	
+	bmov= function(){
+		ctx.drawImage(c, 0, 0, w, h-streamspeed, 0, streamspeed, w, h-streamspeed);
+		ctx.fillRect(spos,360,200,200);
+		ctx.drawImage(ship, spos, 360);
+	}
+
+	setInterval(bmov,33);
+}
+</script>
+</head>
+<body onload="initLayout();">
+
+<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+</body>
+</html>
