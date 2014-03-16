@@ -55,6 +55,19 @@
 				ctx.fillStyle='blue';
 				ctx.fillRect(0,0,w,h);
 				ctx.drawImage(ship.img, ship.spos, 360);
+				c.addEventListener("mousedown",changeDir,false);
+			}
+			function changeDir(event)
+			{
+				if(event.pageX<685)
+				{
+					ship.xspeed+=1;
+				}
+				else
+				{
+					ship.xspeed-=1;
+				}
+				
 			}
 		
 			
