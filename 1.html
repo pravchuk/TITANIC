@@ -13,8 +13,8 @@
 				speed:2,
 				roll:function() {
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
-					ctx.fillRect(ship.spos,360,50,200);
-					ctx.drawImage(ship.img, ship.spos, 360);
+					ctx.fillRect(ship.spos,360,25,60+stream.speed);
+					ctx.drawImage(ship.img, ship.spos, 360,25,60);
 				}
 			}
 			
@@ -28,6 +28,13 @@
 					
 				}
 				
+				
+			}
+			
+			
+			iceberg.create=function(){
+				var a=new iceberg(Math.floor((Math.random()*300)+1));
+				a.appear();
 			}
 			
 			
@@ -69,6 +76,6 @@
 		<br/>
 		<button onclick="setInterval(stream.roll,33);">start</button>
 		<br/>
-		<button onclick="var a=new iceberg(Math.floor((Math.random()*300)+1));a.appear();">Ice please!</button>
+		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
 	</body>
 </html>
