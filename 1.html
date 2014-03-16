@@ -1,43 +1,61 @@
 <html>
 	<head>
 		<script>
+			
+			ship={
+				spos:120,
+				img:new Image()
+				}
+			
+			
+			
+			stream={
+				speed:2,
+				roll:function() {
+					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
+					ctx.fillRect(ship.spos,360,50,200);
+					ctx.drawImage(ship.img, ship.spos, 360);
+				}
+			}
+			
+			
+			function iceberg(vert){
+				this.speed=0;//random;
+				this.vert=vert;
+				this.appear=function (){
+					console.log(vert);
+					ctx.drawImage(iceberg.img,this.vert,40,50,50);
+					
+				}
+				
+			}
+			
+			
 			function init()
 			{
 				c = document.getElementById('myCanvas');
 				ctx=c.getContext("2d");
 				w=300;
 				h=500;
+				iceberg.img=new Image();
+				iceberg.img.src="iceberg.png";
+				ship.img.src='ship-up.png';
 				ctx.fillStyle='blue';
-				ctx.fillRect(0,0,w,h)
+				ctx.fillRect(0,0,w,h);
+				ctx.drawImage(ship.img, ship.spos, 360);
 			}
 		
-		
-		
-		
-
-
-			ship{
-				spos:120;
-				}
-				
 			
-			iceberg{
 			
-			}
-			stream{
-				speed:2;
-				roll:function() {
-					
-					ctx.drawImage(c, 0, 0, w, h-streamspeed, 0, streamspeed, w, h-streamspeed);
-					ctx.fillRect(spos,360,200,200);
-					ctx.drawImage(ship, spos, 360);
-				}
-			}
 		</script>
 	</head>
-	<body onload="init();">
+	<body onload="init();" style="text-align:center">
 		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
+		<br/>
+		<button onclick="setInterval(stream.roll,33);">start</button>
+		<br/>
+		<button onclick="var a=new iceberg(Math.floor((Math.random()*300)+1));a.appear();">Ice please!</button>
 	</body>
 </html>
