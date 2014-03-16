@@ -3,15 +3,20 @@
 		<script>
 			
 			ship={
+				xpeed:0,
 				spos:120,
-				img:new Image()
+				img:new Image(),
+				calx:function(){
+					this.spos+=this.xpeed;
 				}
+			}
 			
 			
 			
 			stream={
 				speed:2,
 				roll:function() {
+					ship.calx();
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
 					ctx.fillRect(ship.spos,360,25,60+stream.speed);
 					ctx.drawImage(ship.img, ship.spos, 360,25,60);
@@ -64,5 +69,8 @@
 		<button onclick="setInterval(stream.roll,33);">start</button>
 		<br/>
 		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
+		<br/>
+		<button onclick="ship.xpeed+=1">left</button>
+		<button onclick="ship.xpeed-=1">right</button>
 	</body>
 </html>
