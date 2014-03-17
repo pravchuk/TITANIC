@@ -5,14 +5,9 @@
 			ship={
 				xpeed:0,
 				spos:120,
-				hor:360,
 				img:new Image(),
 				calx:function(){
 					this.spos+=this.xpeed;
-				},
-				click:function(event){				
-					if(event.pageX<685)	this.xpeed+=1;
-					else this.xpeed-=1;
 				}
 			}
 			
@@ -32,19 +27,12 @@
 			function iceberg(vert){
 				this.speed=0;//random;
 				this.vert=vert;
-				this.hor=40;
-				this.arr=[this.vert,this.hor];
 				this.appear=function (){
-					//console.log(vert);
-					//console.log(this.vert+','+this.hor)
-					ctx.drawImage(iceberg.img,this.vert,this.hor,50,50);
+					console.log(vert);
+					ctx.drawImage(iceberg.img,this.vert,40,50,50);
 					
-				};
-				this.movedown=function(){
-					//this.movecheck.context=this;
-					//alert(this+this.vert+this.hor);
-					setInterval(function (){ console.log(this);},33);
 				}
+				
 				
 			}
 			
@@ -52,27 +40,7 @@
 			iceberg.create=function(){
 				var a=new iceberg(Math.floor((Math.random()*300)+1));
 				a.appear();
-				a.movedown();
 			}
-			
-			
-			function movecheck(ob){
-					
-					console.log("klklkl->",ob[0]+','+ob[1])
-					//collision(ob);
-					//ob.hor+=stream.speed;
-				}
-			
-			function collision(){
-					var vert=this.vert;
-					var hor=this.hor;
-					console.log(vert+','+hor+':'+ship.spos+','+ship.hor)
-					if(vert>ship.spos+25 || vert+50<ship.spos)
-						{return false; console.log("above");}
-					else if(hor+50>ship.hor || hor>ship.hor+60)
-						{return false;console.log("side");}
-					else alert("over")
-				}
 			
 			
 			function init()
@@ -87,9 +55,7 @@
 				ctx.fillStyle='blue';
 				ctx.fillRect(0,0,w,h);
 				ctx.drawImage(ship.img, ship.spos, 360);
-				c.addEventListener("mousedown",ship.click,false);
 			}
-			
 		
 			
 			
@@ -104,7 +70,7 @@
 		<br/>
 		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
 		<br/>
-		<button onclick="ship.xpeed+=1">left</button>
-		<button onclick="ship.xpeed-=1">right</button>
+		<button onclick="ship.spos+=33">left</button>
+		<button onclick="ship.spos-=33">right</button>
 	</body>
 </html>
