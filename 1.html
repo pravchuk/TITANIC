@@ -1,8 +1,24 @@
 <html>
 	<head>
 		<script>
+			/*
+			Work For Chukka
+				Do scoring -- can be done on the basis of km traveled ie pixels here.. or no of icebergs passed by the ship.. former is easier
+				Make collision proper.. if you can come up with a triangle mechanism to check for iceberg collision
+				Add boundary collision.. make set interval function in ship ant call interval every 100 miliseconds
+			Work for Rash
+				add lines to canvas making wawes
+				like /\
+					//\\
+				   ///\\\
+				add one line it will aouto matically replicate
+				learn on phone inputs and phone porting
+				
 			
+			*/
 			ship={
+				width:25,
+				height:60,
 				xpeed:0,
 				spos:120,
 				hor:360,
@@ -13,6 +29,14 @@
 				click:function(event){				
 					if(event.pageX<685)	this.xpeed+=1;
 					else this.xpeed-=1;
+				},
+				left:function(){
+					if(ship.xpeed<1) ship.xpeed=3; 
+					else ship.xpeed+=1; 
+				},
+				right:function(){
+					if(ship.xpeed>-1) ship.xpeed=-3; 
+					else ship.xpeed-=1; 
 				}
 			}
 			
@@ -23,8 +47,15 @@
 				roll:function() {
 					ship.calx();
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
-					ctx.fillRect(ship.spos,360,25,60+stream.speed);
-					ctx.drawImage(ship.img, ship.spos, 360,25,60);
+					
+					ctx.fillRect(ship.spos,ship.hor,ship.width,ship.height+stream.speed);
+					ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
+				},
+				gravity:function(){
+					setInterval(function(){
+						if(ship.spos<150-ship.width/2) ship.xpeed-=1;
+						else ship.xpeed+=1;
+					},330)
 				}
 			}
 			
@@ -52,26 +83,29 @@
 			iceberg.create=function(){
 				var a=new iceberg(Math.floor((Math.random()*300)+1));
 				a.appear();
-				a.movedown();
+				setInterval(function (){ iceberg.movecheck.call(a);},33);
+				//a.movedown();
+				
 			}
 			
 			
-			function movecheck(ob){
-					
-					console.log("klklkl->",ob[0]+','+ob[1])
-					//collision(ob);
-					//ob.hor+=stream.speed;
+			iceberg.movecheck=function(){
+					var ob=this;
+					//console.log("klklkl->",ob[0]+','+ob[1])
+					iceberg.collision.call(ob);
+					ob.hor+=stream.speed;
 				}
 			
-			function collision(){
-					var vert=this.vert;
-					var hor=this.hor;
-					console.log(vert+','+hor+':'+ship.spos+','+ship.hor)
+			iceberg.collision=function(){
+					var ob=this;
+					var vert=ob.vert;
+					var hor=ob.hor;
+					console.log('coll>',vert+','+hor+':'+ship.spos+','+ship.hor)
 					if(vert>ship.spos+25 || vert+50<ship.spos)
-						{return false; console.log("above");}
-					else if(hor+50>ship.hor || hor>ship.hor+60)
-						{return false;console.log("side");}
-					else alert("over")
+						return false; 
+					if( (hor+50 < ship.hor) || (hor > (ship.hor+60)))
+						return false;
+					document.write('Game Over');
 				}
 			
 			
@@ -86,25 +120,31 @@
 				ship.img.src='ship-up.png';
 				ctx.fillStyle='blue';
 				ctx.fillRect(0,0,w,h);
-				ctx.drawImage(ship.img, ship.spos, 360);
+				ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				c.addEventListener("mousedown",ship.click,false);
 			}
-			
+			function keys(ev)
+			{	
+				if(ev.keyCode==52||ev.keyCode==97) ship.left();
+				else if (ev.keyCode==54||ev.keyCode==100) ship.right();
+			}
 		
 			
 			
 		</script>
 	</head>
-	<body onload="init();" style="text-align:center">
+	<body onkeypress="keys(event)" onload="init();" style="text-align:center">
 		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<br/>
-		<button onclick="setInterval(stream.roll,33);">start</button>
+		<button onclick="setInterval(stream.roll,33);stream.gravity();setInterval(iceberg.create,2000);">start</button>
+		
+		<!--button onclick="setInterval(iceberg.create,1000);">Ice please!</button-->
 		<br/>
-		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
+		<button onclick="ship.left()">left</button>
+		<button onclick="ship.right()">right</button>
 		<br/>
-		<button onclick="ship.xpeed+=1">left</button>
-		<button onclick="ship.xpeed-=1">right</button>
+		<p>Or use num pad 4,6 to play or use .. WASD .. a and d to play</p>
 	</body>
 </html>
