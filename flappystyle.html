@@ -1,7 +1,12 @@
 <html>
 	<head>
+		<script src="/jquery.js"></script>
 		<script>
 			
+			var w=300; //width
+			var h=500; //height
+
+
 			ship={
 				xpeed:0,
 				spos:120,
@@ -47,8 +52,6 @@
 			{
 				c = document.getElementById('myCanvas');
 				ctx=c.getContext("2d");
-				w=300;
-				h=500;
 				iceberg.img=new Image();
 				iceberg.img.src="iceberg.png";
 				ship.img.src='ship-up.png';
@@ -56,10 +59,25 @@
 				ctx.fillRect(0,0,w,h);
 				ctx.drawImage(ship.img, ship.spos, 360);
 			}
+
+			$(document).keydown(function(e){
+			    if (e.keyCode == 37) { 
+			       //left arrow pressed
+			       if(ship.spos+30<=w)
+
+			       		ship.spos+=5;
+			    }
+			    else if (e.keyCode == 39) { 
+			       //right arrow pressed
+			       if(ship.spos-5>=0)
+			       		ship.spos-=5;
+			    }
+			});
 		
 			
 			
 		</script>
+
 	</head>
 	<body onload="init();" style="text-align:center">
 		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
@@ -69,7 +87,7 @@
 		<button onclick="setInterval(stream.roll,33);">start</button>
 		<br/>
 		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
-		<br/>
+		<br/>	
 		<button onclick="ship.spos+=33">left</button>
 		<button onclick="ship.spos-=33">right</button>
 	</body>
