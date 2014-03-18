@@ -8,6 +8,7 @@
 			var blankship = new Image();
 			blankship.src = "ship-up-blank.png";
 			var exShipPosition = 120;
+			var score=0;
 
 			ship={
 				xpeed:0,
@@ -40,14 +41,16 @@
 					console.log(vert);
 					ctx.drawImage(iceberg.img,this.vert,40,50,50);
 				}
-				
-				
 			}
-			
 			
 			iceberg.create=function(){
 				var a=new iceberg(Math.floor((Math.random()*(w-30))+1));
 				a.appear();
+			}
+
+			var scoreboard = function(){
+				document.getElementById('score').innerHTML =score;
+				score++;
 			}
 			
 			
@@ -63,6 +66,7 @@
 				  setInterval(stream.roll,33);
 				};
 				ship.img.src='ship-up.png';
+				setTimeout(function(){setInterval(scoreboard,1000);},5000);
 			}
 
 			$(document).keydown(function(e){
@@ -85,11 +89,10 @@
 
 	</head>
 	<body onload="init();" style="text-align:center">
+		<div><span id="score">0</span></div>
 		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
-		<br/>
-		<button onclick="setInterval(stream.roll,33);">start</button>
 		<br/>
 		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
 		<br/>	
