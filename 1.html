@@ -6,6 +6,7 @@
 				Do scoring -- can be done on the basis of km traveled ie pixels here.. or no of icebergs passed by the ship.. former is easier
 				Make collision proper.. if you can come up with a triangle mechanism to check for iceberg collision
 				Add boundary collision.. make set interval function in ship ant call interval every 100 miliseconds
+				also write start screen . and game over screen.
 			Work for Rash
 				add lines to canvas making wawes
 				like /\
@@ -16,6 +17,8 @@
 				
 			
 			*/
+			score=0;
+			
 			ship={
 				width:25,
 				height:60,
@@ -23,6 +26,7 @@
 				spos:120,
 				hor:360,
 				img:new Image(),
+				blank:new Image(),
 				calx:function(){
 					this.spos+=this.xpeed;
 				},
@@ -49,6 +53,7 @@
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
 					
 					ctx.fillRect(ship.spos,ship.hor,ship.width,ship.height+stream.speed);
+					//ctx.drawImage(ship.blank, ship.spos-10, ship.hor+stream.speed-5,ship.width+20,ship.height+stream.speed+15);
 					ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				},
 				gravity:function(){
@@ -118,27 +123,40 @@
 				iceberg.img=new Image();
 				iceberg.img.src="iceberg.png";
 				ship.img.src='ship-up.png';
+				ship.blank.src='ship-up-blank.png';
 				ctx.fillStyle='blue';
 				ctx.fillRect(0,0,w,h);
 				ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				c.addEventListener("mousedown",ship.click,false);
 			}
+			
+			var scoreboard = function(){
+				document.getElementById('score').innerHTML =score;
+				score++;
+			}
+			
 			function keys(ev)
 			{	
 				if(ev.keyCode==52||ev.keyCode==97) ship.left();
 				else if (ev.keyCode==54||ev.keyCode==100) ship.right();
 			}
 		
-			
+			function start()
+			{
+				setInterval(stream.roll,33);
+				stream.gravity();
+				setInterval(iceberg.create,2000);
+			}
 			
 		</script>
 	</head>
-	<body onkeypress="keys(event)" onload="init();" style="text-align:center">
+	<body onkeypress="keys(event)" onload="init();start();" style="text-align:center">
+		<div><span id="score">0</span></div>
 		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<br/>
-		<button onclick="setInterval(stream.roll,33);stream.gravity();setInterval(iceberg.create,2000);">start</button>
+		<!--button onclick="setInterval(stream.roll,33);stream.gravity();setInterval(iceberg.create,2000);">start</button>
 		
 		<!--button onclick="setInterval(iceberg.create,1000);">Ice please!</button-->
 		<br/>
