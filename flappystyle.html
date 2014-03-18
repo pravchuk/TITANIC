@@ -5,7 +5,9 @@
 			
 			var w=300; //width
 			var h=500; //height
-
+			var blankship = new Image();
+			blankship.src = "ship-up-blank.png";
+			var exShipPosition = 120;
 
 			ship={
 				xpeed:0,
@@ -22,8 +24,10 @@
 				speed:2,
 				roll:function() {
 					ship.calx();
+					ctx.drawImage(blankship, exShipPosition, 360,25,60+stream.speed);
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
-					ctx.fillRect(ship.spos,360,25,60+stream.speed);
+					exShipPosition = ship.spos;
+					//ctx.fillRect(ship.spos,360,25,60+stream.speed);
 					ctx.drawImage(ship.img, ship.spos, 360,25,60);
 				}
 			}
@@ -35,7 +39,6 @@
 				this.appear=function (){
 					console.log(vert);
 					ctx.drawImage(iceberg.img,this.vert,40,50,50);
-					
 				}
 				
 				
@@ -43,7 +46,7 @@
 			
 			
 			iceberg.create=function(){
-				var a=new iceberg(Math.floor((Math.random()*300)+1));
+				var a=new iceberg(Math.floor((Math.random()*(w-30))+1));
 				a.appear();
 			}
 			
@@ -54,10 +57,12 @@
 				ctx=c.getContext("2d");
 				iceberg.img=new Image();
 				iceberg.img.src="iceberg.png";
-				ship.img.src='ship-up.png';
 				ctx.fillStyle='blue';
 				ctx.fillRect(0,0,w,h);
-				ctx.drawImage(ship.img, ship.spos, 360);
+				ship.img.onload = function() {
+				  setInterval(stream.roll,33);
+				};
+				ship.img.src='ship-up.png';
 			}
 
 			$(document).keydown(function(e){
@@ -88,7 +93,6 @@
 		<br/>
 		<button onclick="setInterval(iceberg.create,1000);">Ice please!</button>
 		<br/>	
-		<button onclick="ship.spos+=33">left</button>
-		<button onclick="ship.spos-=33">right</button>
+		
 	</body>
 </html>
