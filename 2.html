@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<style>
+			.ship{
+				width:200;
+				position:absolute;
+				left:260px;
+			}
+			
+			.mainbox{
+				position:absolute;
+				border-color:grey;
+				border-width:2px;
+				border-style:solid;
+				width:720px;
+				height:1280px;
+				
+				background: #537cdb; /* Old browsers */
+				background: -moz-linear-gradient(top,  #537cdb 0%, #ddf1f9 35%, #000eaa 80%, #0025f7 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#537cdb), color-stop(35%,#ddf1f9), color-stop(80%,#000eaa), color-stop(100%,#0025f7)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top,  #537cdb 0%,#ddf1f9 35%,#000eaa 80%,#0025f7 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top,  #537cdb 0%,#ddf1f9 35%,#000eaa 80%,#0025f7 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top,  #537cdb 0%,#ddf1f9 35%,#000eaa 80%,#0025f7 100%); /* IE10+ */
+				background: linear-gradient(to bottom,  #537cdb 0%,#ddf1f9 35%,#000eaa 80%,#0025f7 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#537cdb', endColorstr='#0025f7',GradientType=0 ); /* IE6-9 */
+
+				
+				
+			}
+		</style>
+		
+		
+		<script>
+		
+			function init(){
+			
+			
+			
+				ship={
+					width:200,
+					xpeed:0,
+					spos:260,
+					img:document.getElementById("shipimg"),	
+	
+					calx:function(){
+						this.spos+=this.xpeed;
+					},
+					click:function(event){				
+						if(event.pageX<685)	this.xpeed+=1;
+						else this.xpeed-=1;
+					},
+					left:function(){
+						if(ship.xpeed<1) ship.xpeed=3; 
+						else ship.xpeed+=1; 
+					},
+					right:function(){
+						if(ship.xpeed>-1) ship.xpeed=-3; 
+						else ship.xpeed-=1; 
+					}
+				}
+
+				
+				
+				
+				
+				
+				stream={
+				speed:2,
+				roll:function() {
+					ship.calx();
+					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
+					
+					ctx.fillRect(ship.spos,ship.hor,ship.width,ship.height+stream.speed);
+					//ctx.drawImage(ship.blank, ship.spos-10, ship.hor+stream.speed-5,ship.width+20,ship.height+stream.speed+15);
+					ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
+				},
+				gravity:function(){
+					setInterval(function(){
+						if(ship.spos<150-ship.width/2) ship.xpeed-=1;
+						else ship.xpeed+=1;
+					},330)
+				}
+			}
+			
+			
+			
+			
+			
+			
+				setInterval(function(){var a=new iceberg();},3000);
+			
+				
+				console.log("init called")
+				
+			}
+			
+			
+			function iceberg()
+			{
+				this.width=Math.random()*150+50;
+				this.vert=Math.random()*(720-this.width);//random;
+				this.speed=Math.random()*4+1;
+				this.hor=40;
+			
+				var ob=document.createElement("IMG");
+				ob.src="iceberg.png";
+				ob.style.position="absolute";
+				ob.style.left=""+this.vert+"px";
+				ob.style.width=""+this.width+"px";
+				ob.class="ice";
+				document.getElementById("shipimg").appendChild(ob);
+				this.img=ob;
+				console.log("ice called")
+				
+				
+			}
+			
+		</script>
+		
+		
+		
+		
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+		<script>
+			$(".ice").load(function(){
+				$(".ice").animate({top:1920},{duration:(3000),easing:'linear'});
+			})
+			
+		
+		</script>
+		
+		
+	</head>
+	<body onclick="init();">
+		<div class="mainbox" >
+			<img id="shipimg" class="ship" src="jshipup.png"></img>
+		</div>
+	</body>
+</html>
