@@ -127,7 +127,12 @@
 			$(".ice").load(function(){
 				$(".ice").animate({top:1920},{duration:(3000),easing:'linear'});
 			})
-			
+			$('.ship').each(function() 
+			{
+				var xPos = $(this).offset().left;
+				xPos += 200;
+				$(this).offset({'left':xPos});
+			});
 		
 		</script>
 		
