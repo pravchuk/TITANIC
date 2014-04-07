@@ -30,6 +30,7 @@
 				calx:function(){
 					this.spos+=this.xpeed;
 				},
+<<<<<<< HEAD
 				click:functName: Rashmi Raghunandan
 
 E-mail address: rashmi.raghunandan93@gmail.com
@@ -114,6 +115,11 @@ I am an enthusiastic and quick learner, which will definitely be a plus point fo
 ion(event){				
 					if(event.pageX<685)	this.xpeed+=1;
 					else this.xpeed-=1;
+=======
+				click:function(event){				
+					if(event.pageX<685)	ship.left();
+					else ship.right();
+>>>>>>> da944e4a1a48dd34758cc0b34b6f9447c728c33e
 				},
 				left:function(){
 					if(ship.xpeed<1) ship.xpeed=3; 
@@ -126,16 +132,34 @@ ion(event){
 			}
 			
 			
-			
+			turn=false;
 			stream={
 				speed:2,
 				roll:function() {
 					ship.calx();
+					if(turn==10)
+						{//ctx.fillStyle='#342D7E'
+						
+							ctx.rotate(0.5);
+							ctx.beginPath();
+							ctx.rect(138, 120, 200, 100);
+							ctx.fillStyle = "#342D7E";
+							ctx.fill();
+							ctx.lineWidth = 5;
+							ctx.strokeStyle = "#342D7E";
+							ctx.stroke();
+							ctx.rotate(-0.5);
+						}
+					else if(turn==20) {ctx.fillStyle='#4863A0'; turn=0;}
+					
+					turn++;
+					ctx.fillRect(0,0,w,3);
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
 					
 					ctx.fillRect(ship.spos,ship.hor,ship.width,ship.height+stream.speed);
 					//ctx.drawImage(ship.blank, ship.spos-10, ship.hor+stream.speed-5,ship.width+20,ship.height+stream.speed+15);
 					ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
+					
 				},
 				gravity:function(){
 					setInterval(function(){
@@ -150,24 +174,21 @@ ion(event){
 				this.speed=0;//random;
 				this.vert=vert;
 				this.hor=40;
-				this.arr=[this.vert,this.hor];
+				this.width=
+				//this.arr=[this.vert,this.hor];
 				this.appear=function (){
 					//console.log(vert);
 					//console.log(this.vert+','+this.hor)
 					ctx.drawImage(iceberg.img,this.vert,this.hor,50,50);
 					
 				};
-				this.movedown=function(){
-					//this.movecheck.context=this;
-					//alert(this+this.vert+this.hor);
-					setInterval(function (){ console.log(this);},33);
-				}
+				
 				
 			}
 			
 			
 			iceberg.create=function(){
-				var a=new iceberg(Math.floor((Math.random()*300)+1));
+				var a=new iceberg(Math.floor((Math.random()*(w-ship.width))));
 				a.appear();
 				setInterval(function (){ iceberg.movecheck.call(a);},33);
 				//a.movedown();
@@ -199,14 +220,21 @@ ion(event){
 			{
 				c = document.getElementById('myCanvas');
 				ctx=c.getContext("2d");
-				w=300;
-				h=500;
+				//w=screen.width;
+				//h=screen.height;
+				h=1280;
+				w=720;
+				c.height=h;
+				c.width=w;
 				iceberg.img=new Image();
 				iceberg.img.src="iceberg.png";
 				ship.img.src='ship-up.png';
 				ship.blank.src='ship-up-blank.png';
 				ctx.fillStyle='blue';
-				ctx.fillRect(0,0,w,h);
+				//ctx.fillRect(0,0,w,h);
+				back12=new Image();
+				back12.src="ripple.jpg";
+				ctx.drawImage(back12, 0, 0,w,h);
 				ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				c.addEventListener("mousedown",ship.click,false);
 			}
@@ -231,9 +259,9 @@ ion(event){
 			
 		</script>
 	</head>
-	<body onkeypress="keys(event)" onload="init();start();" style="text-align:center">
+	<body onkeypress="keys(event)" onload="init();start();" >
 		<div><span id="score">0</span></div>
-		<canvas id="myCanvas" width="300" height="500" style="border:1px solid #000000;background-color:#008AE6">
+		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<br/>
