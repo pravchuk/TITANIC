@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<script>
+			function init()
+			{
+				c = document.getElementById('myCanvas');
+				ctx=c.getContext("2d");
+				grd = ctx.createLinearGradient(0, 0, screen.width, screen.height);
+				// light blue
+				grd.addColorStop(0, '#8ED6FF');   
+				// dark blue
+				grd.addColorStop(1, '#004CB3');
+				ctx.fillStyle = grd;
+				ctx.font = "30px Arial";
+				ctx.strokeText("GAME OVER",50,200);
+				ctx.strokeText("Score:",50,250);
+				ctx.fill();
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+	</body>
+</html>
