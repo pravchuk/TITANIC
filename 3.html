@@ -44,7 +44,7 @@
 				},
 				edgecol:function(){
 						console.log(ship.spos);
-						if(ship.spos<0 || ship.spos >600)
+						if(ship.spos<0 || ship.spos >720)
 							//document.write('Game Over');
 							window.open("gameover.html");
 						
@@ -56,10 +56,12 @@
 			stream={
 				speed:2,
 				roll:function() {
+					var exShipPosition = ship.spos;
 					ship.calx();
-					ctx.drawImage(c, exShipPosition, 360,25,60+stream.speed);
+					//ctx.drawImage(c, exShipPosition, 360,25,60+stream.speed);
+					ctx.drawImage(c, exShipPosition, 0, ship.width, 5, exShipPosition, ship.hor, ship.width,ship.height );
 					ctx.drawImage(c, 0, 0, w, h-stream.speed, 0, stream.speed, w, h-stream.speed);
-					exShipPosition = ship.spos;
+					
 					//ctx.fillRect(ship.spos,360,25,60+stream.speed);
 					ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				},
@@ -114,13 +116,15 @@
 				
 				this.speed=Math.floor((Math.random()*10)+1);;//random;
 				this.vert=vert;
+				this.height=50;
+				this.width=50;
 				this.hor=40;
 				this.flag=true;
 				//this.arr=[this.vert,this.hor];
 				this.appear=function (){
 					//console.log(vert);
 					//console.log(this.vert+','+this.hor)
-					ctx.drawImage(iceberg.img,this.vert,this.hor,50,50);
+					ctx.drawImage(iceberg.img,this.vert,this.hor,this.width,this.height);
 					
 				};
 				
@@ -148,20 +152,25 @@
 					var ob=this;
 					var vert=ob.vert;
 					var hor=ob.hor;
-					console.log('coll>',vert+','+hor+':'+ship.spos+','+ship.hor)
-					if(hor>ship.hor && ob.flag)
+					console.log('coll>',vert+','+hor+':'+ship.spos+','+ship.hor);
+					if(!ob.flag) return false;
+					if(hor>(ship.hor+ship.height) && ob.flag)
 					{
 						scoreboard();
 						ob.flag=false;
+						//alert();
 					}
-					if(vert>ship.spos+ship.width || vert+ob.width<ship.spos)
-						return false; 
-					if( (hor+ob.height < ship.hor) || (hor > (ship.hor+ship.height)))
-						return false;
-					if(vert<ship.hor)
-						scoreboard();
+					if((vert>(ship.spos+ship.width)) || ((vert+ob.width)<ship.spos))
+						{return false;}
+						//alert("thi")
+					if( ((hor+ob.height) < ship.hor) || (hor > (ship.hor+ship.height)))
+						{return false;}
+					
 					//document.write('Game Over');
-					window.open("gameover.html");
+					alert("G");
+					//window.open("gameover.html");
+					return true;
+					
 				}
 			
 			
@@ -169,10 +178,12 @@
 			{
 				c = document.getElementById('myCanvas');
 				ctx=c.getContext("2d");
-				w=screen.width;
-				h=screen.height;
-				c.height=w;
-				c.width=h;
+				//w=screen.width;
+				//h=screen.height;
+				h=1280;
+				w=720;
+				c.height=h;
+				c.width=w;
 				exShipPosition = 120;
 				ship.img=new Image();
 				iceberg.img=new Image();
