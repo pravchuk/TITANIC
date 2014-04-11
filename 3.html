@@ -45,8 +45,7 @@
 				edgecol:function(){
 						console.log(ship.spos);
 						if(ship.spos<0 || ship.spos >720)
-							//document.write('Game Over');
-							window.open("gameover.html");
+							gameover();
 						
 				}
 			}
@@ -167,7 +166,8 @@
 						{return false;}
 					
 					//document.write('Game Over');
-					alert("G");
+					//alert("G");
+					gameover();
 					//window.open("gameover.html");
 					return true;
 					
@@ -219,12 +219,37 @@
 		
 			function start()
 			{
-				setInterval(stream.roll,33);
+				t1=setInterval(stream.roll,33);
 				stream.gravity();
-				setInterval(iceberg.create,2000);
-				setInterval(ship.edgecol,1);
-				setInterval(wave.create,2000);
-				setInterval(tyre.create,8000);
+				t2=setInterval(iceberg.create,2000);
+				t3=setInterval(ship.edgecol,1);
+				t4=setInterval(wave.create,2000);
+				t5=setInterval(tyre.create,8000);
+			}
+			function stop()
+			{
+				clearInterval(t1);
+				clearInterval(t2);
+				clearInterval(t3);
+				clearInterval(t4);
+				clearInterval(t5);
+			}
+			function gameover()
+			{
+				var context = c.getContext('2d');
+				stop();
+				context.beginPath();
+				context.rect(120, 100, 420, 400);
+				context.fillStyle = 'blue';
+				context.fill();
+				context.lineWidth = 7;
+				context.strokeStyle = 'black';
+				context.font="20px Georgia";
+				context.fillStyle="black";
+				context.fillText("GAME OVER!",180,200);		
+				context.fillText("SCORE IS:",180,250);
+				context.fillText(score,280,250);
+				context.stroke();
 			}
 			
 		</script>
@@ -232,6 +257,7 @@
 	<body onkeypress="keys(event)" onload="init();start();" >
 		<div><span id="score">0</span></div>
 		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
+		<canvas id="gmcan" width="150" height="250" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<br/>
