@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<script>
+			ship={
+			width:50,
+			height:120,
+			xpeed:0,
+			spos:360-25, 
+			hor:360,
+			img:new Image()
+			}
+			
+			function init()
+			{
+			
+				
+			
+			
+				c = document.getElementById('home');
+				ctx=c.getContext("2d");
+				h=1280;
+				w=720;
+				c.height=h;
+				c.width=w;
+				//ship.img=new Image();
+				ship.img.src='ship-up.png';
+				//grd = ctx.createLinearGradient(0, 0, w, h);
+				// light blue
+				//grd.addColorStop(0, '#8ED6FF');   
+				// dark blue
+				//grd.addColorStop(1, '#004CB3');
+				//ctx.fillStyle = grd;
+				//ctx.fill();
+				ctx=c.getContext("2d");
+				//ctx.fillRect(10, 10, w-20, h-20);
+				console.log(ship.img, ship.spos, ship.hor,ship.width,ship.height)
+				//ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
+				ctx.drawImage(ship.img, 200, 200,500,500);
+				ctx.strokeText("NEW GAME",270,650);
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<canvas  id="home" width="720" height="1280" style="position:absolute;border:1px solid #000000;background-color:#008AE6"></canvas>
+	</body>
+</html>
