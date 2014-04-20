@@ -40,7 +40,7 @@ if($todo=='post'){
 	}
 
 	if($temp=="update"){
-		$query = mysql_query("UPDATE HighScores SET person = '$person', score = $score, email = '$email')");
+		$query = mysql_query("UPDATE HighScores SET person = '$person', score = $score, email = '$email'");
 	}else{
 		$query = mysql_query("INSERT INTO HighScores VALUES ('$person',$score,'$email')");
 	}
