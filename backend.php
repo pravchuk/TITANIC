@@ -37,7 +37,6 @@ if($todo=='post'){
 				$temp = "update";
 			}
 		}
-		echo '<tr><td>'.$row['person'] . "</td><td>" . $row['score'] . '</td></tr>';
 	}
 
 	if($temp=="update"){
