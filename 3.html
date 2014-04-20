@@ -200,9 +200,22 @@
 				cotx.strokeText("GAME OVER",270,650);
 				cotx.strokeText("Score:",270,720);
 				cotx.strokeText(""+score,400,720);
-				if(localStorage.highscore<score)
-					localStorage.highscore=score;
-				cotx.strokeText("High Score: "+localStorage.highscore,130,780);
+				if(localStorage.getItem('highscore')){
+					var highscore = localStorage.getItem('highscore');
+					if(highscore<=score)
+					{	//localStorage.highscore=score;
+						try {
+						  localStorage.setItem("highscore", score);
+						} catch (e) {
+						  if (e == QUOTA_EXCEEDED_ERR) {
+						    alert('Quota exceeded!');
+						  }
+						}
+					}
+				}else{
+					localStorage.setItem("highscore", score);
+				}
+				cotx.strokeText("High Score: "+localStorage.getItem("highscore"),130,780);
 				cotx.strokeText("Play Again",400,780);	
 				c.addEventListener("mousedown",refresh,true);				
 			}
