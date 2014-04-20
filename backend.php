@@ -7,6 +7,8 @@
 // Column1 = person (TEXT)
 // Column2 = score (INT(3))
 // Column3 = email (TEXT)
+// POST TO localhost..../backend.php?todo=post
+// GET TO localhost..../backend.php
 
 $todo=$_GET['todo']; //post or get
 
@@ -39,15 +41,19 @@ if($todo=='post'){
 	}
 
 	if($temp=="update"){
-		$query = mysql_query("UPDATE HighScores SET person = '$person', score = $score, email = '$email');");
+		$query = mysql_query("UPDATE HighScores SET person = '$person', score = $score, email = '$email')");
 	}else{
-		$query = mysql_query("INSERT INTO HighScores VALUES ('$person',$score,'$email');");
+		$query = mysql_query("INSERT INTO HighScores VALUES ('$person',$score,'$email')");
 	}
-	echo '</table>';
+	if($query){
+		echo "Succesfully Updated";
+	}else{
+		echo "Error updating database";
+	}
 }
 else{
 
-$result = mysql_query("SELECT * FROM HighScores");
+$result = mysql_query("SELECT * FROM HighScores ORDER BY score DESC");
 
 echo '<table><tr><td>Name</td><td>Score</td></tr>';
 
