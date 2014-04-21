@@ -44,7 +44,7 @@
 					else ship.xpeed-=1; 
 				},
 				edgecol:function(){
-						console.log(ship.spos);
+						//console.log(ship.spos);
 						if(ship.spos<0 || ship.spos >720)
 							//document.write('Game Over');
 							gameover();
@@ -55,7 +55,8 @@
 			
 			
 			stream={
-				speed:20,
+				speed:1,
+				mode:0,
 				roll:function() {
 					var exShipPosition = ship.spos;
 					ship.calx();
@@ -92,26 +93,6 @@
 				var a=new wave(Math.floor((Math.random()*(720-50))+1));
 				a.appear();
 				}
-				
-				function tyre(vert){
-				this.speed=0;//random;
-				this.vert=vert;
-				this.hor=20;
-				//this.arr=[this.vert,this.hor];
-				this.appear=function ()
-				{
-					//console.log(vert);
-					//console.log(this.vert+','+this.hor)
-					ctx.drawImage(tyre,this.vert,this.hor,50,50);
-					
-				};
-				}
-				tyre.create=function()
-				{
-				var a=new tyre(Math.floor((Math.random()*300)+1));
-				a.appear();
-				}
-				
 				
 			function iceberg(vert){
 				
@@ -153,7 +134,7 @@
 					var ob=this;
 					var vert=ob.vert;
 					var hor=ob.hor;
-					console.log('coll>',vert+','+hor+':'+ship.spos+','+ship.hor);
+					//console.log('coll>',vert+','+hor+':'+ship.spos+','+ship.hor);
 					if(!ob.flag) return false;
 					if(hor>(ship.hor+ship.height) && ob.flag)
 					{
@@ -195,7 +176,7 @@
 				cotx.fillStyle = grd;
 				cotx.font = "40px Calibri";
 				
-				cotx.fillRect(100, 600, 520, 200);
+				cotx.fillRect(100, 600, 570, 280);
 				cotx.strokeText("GAME OVER",270,650);
 				cotx.strokeText("Score:",270,720);
 				cotx.strokeText(""+score,400,720);
@@ -215,14 +196,31 @@
 					localStorage.setItem("highscore", score);
 				}
 				cotx.strokeText("High Score: "+localStorage.getItem("highscore"),130,780);
-				cotx.strokeText("Play Again",400,780);	
+				cotx.strokeText("Play Again",400,780);
+				cotx.strokeText("Submit Score",130,840);
+				cotx.strokeText("See High Scores",400,840);
 				c.addEventListener("mousedown",refresh,true);				
 			}
 			function refresh(event)
 			{
 				//alert("tada");
-				if(event.pageX>380 && event.pageX<560)// && event.PageY>780)
+				if(event.pageX>400 && event.pageX<600 && event.pageY>780 && event.pageY<820)
 				{
+					window.location.reload();
+					
+				}
+				else if(event.pageX>400 && event.pageX<670 && event.pageY>840 && event.pageY<900)
+				{
+					getHighScores();
+				}
+				else if(event.pageX>130 && event.pageX<330 && event.pageY>840 && event.pageY<900 && stream.mode==1)
+				{
+					submitScore();
+				}
+				else if(event.pageX>130 && event.pageX<330 && event.pageY>840 && event.pageY<900 && stream.mode==0)
+				{
+					//submitScore();
+					alert("scores can be submitted only for challenge games");
 					window.location.reload();
 				}
 			}
@@ -262,9 +260,79 @@
 				ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
 				c.addEventListener("mousedown",ship.click,false);
 			}
+			function gamestart()
+			{
+				c = document.getElementById('myCanvas');
+				ctx=c.getContext("2d");
+				h=1280;
+				w=720;
+				c.height=h;
+				c.width=w;
+				exShipPosition = 120;
+				ship.img=new Image();
+				iceberg.img=new Image();
+				iceberg.img.src="iceberg.png";
+				ship.img.src='ship-up.png';
+				ship.blank.src='ship-up-blank.png';
+				iceberg.img.src="iceberg.png";
+				ship.img.src='ship-up.png';
+				ripple=new Image();
+				ripple.src="bg1.png";
+				tyre=new Image();
+				tyre.src="tyre.png";
+				ctx.rect(0, 0, w, h);
+				grd = ctx.createLinearGradient(0, 0, w, h);
+				grd.addColorStop(0, '#8ED6FF');   
+				grd.addColorStop(1, '#004CB3');
+				ctx.fillStyle = grd;
+				ctx.fill();
+				ctx.drawImage(ship.img, ship.spos, ship.hor,ship.width,ship.height);
+			//	ctx.drawImage(iceberg.img,50,50);
+				ctx.font = "40px Calibri";				
+				//ctx.fillRect(100, 600, 570, 280);
+				ctx.strokeText("Practice: Low",270,650);
+				ctx.strokeText("Practice: Medium",270,700);
+				ctx.strokeText("Practice: High",270,750);
+				ctx.strokeText("CHALLENGE",270,820);
+				c.addEventListener("mousedown",game,false);
+					
+			}
+			function game()
+			{
+				
+				if(event.pageX>270 && event.pageX<520 && event.pageY>650 && event.pageY<700)
+				{
+					stream.mode=0;
+					stream.speed=5;
+				}
+				else if(event.pageX>270 && event.pageX<520 && event.pageY>700 && event.pageY<750)
+				{
+					stream.mode=0;
+					stream.speed=10;
+				}
+				else if(event.pageX>270 && event.pageX<520 && event.pageY>750 && event.pageY<800)
+				{
+					stream.mode=0;
+					stream.speed=15;
+				}
+				else if(event.pageX>270 && event.pageX<520 && event.pageY>820 && event.pageY<850)
+				{
+					stream.mode=1;
+					stream.speed=8;
+				}
+				else
+				{
+					window.location.reload();
+				}
+				init();
+				start();
+			}
 			function scoreboard(){
 				score++;
-				document.getElementById('score').innerHTML =score;
+				if(score%5 == 0 && stream.mode==1)
+					stream.speed=stream.speed+1;
+				sc=score + " " +stream.speed+ "  "+ stream.mode;
+				document.getElementById('score').innerHTML =sc;
 				
 			}
 			
@@ -283,10 +351,56 @@
 				setInterval(wave.create,2000);
 				setInterval(tyre.create,8000);
 			}
-		
+
+
+			function submitScore(){
+				var score = localStorage.getItem('highscore');
+				var person = prompt("Please Enter Your Name","Chukka");
+				var email = prompt("Please Enter Your Email ID","chukka@gmail.com");
+				var xmlhttp;
+				if (window.XMLHttpRequest)
+				  {// code for IE7+, Firefox, Chrome, Opera, Safari
+				  xmlhttp=new XMLHttpRequest();
+				  }
+				else
+				  {// code for IE6, IE5
+				  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				  }
+				xmlhttp.onreadystatechange=function()
+				  {
+				  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				    {
+				    alert(xmlhttp.responseText);
+				    }
+				  }
+				xmlhttp.open("POST","backend.php",true);
+				xmlhttp.send("todo=post&person="+person+"&email="+email+"&score="+score);
+				xmlhttp.send();
+			}
+			function getHighScores(){
+				var xmlhttp;
+				if (window.XMLHttpRequest)
+				  {// code for IE7+, Firefox, Chrome, Opera, Safari
+				  xmlhttp=new XMLHttpRequest();
+				  }
+				else
+				  {// code for IE6, IE5
+				  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				  }
+				xmlhttp.onreadystatechange=function()
+				  {
+				  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				    {
+				    alert(xmlhttp.responseText);
+				    }
+				  }
+				xmlhttp.open("GET","backend.php",true);
+				xmlhttp.send();
+			}
+
 		</script>
 	</head>
-	<body onkeypress="keys(event)" onload="init();start();" >
+	<body onkeypress="keys(event)" onload="gamestart();" >
 		<div><span id="score">0</span></div>
 		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
