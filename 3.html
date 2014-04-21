@@ -195,7 +195,7 @@
 				cotx.fillStyle = grd;
 				cotx.font = "40px Calibri";
 				
-				cotx.fillRect(100, 600, 520, 200);
+				cotx.fillRect(100, 600, 570, 280);
 				cotx.strokeText("GAME OVER",270,650);
 				cotx.strokeText("Score:",270,720);
 				cotx.strokeText(""+score,400,720);
@@ -215,15 +215,24 @@
 					localStorage.setItem("highscore", score);
 				}
 				cotx.strokeText("High Score: "+localStorage.getItem("highscore"),130,780);
-				cotx.strokeText("Play Again",400,780);	
+				cotx.strokeText("Play Again",400,780);
+				cotx.strokeText("Submit Score",130,840);
+				cotx.strokeText("See High Scores",400,840);
 				c.addEventListener("mousedown",refresh,true);				
 			}
 			function refresh(event)
 			{
 				//alert("tada");
-				if(event.pageX>380 && event.pageX<560)// && event.PageY>780)
+				if(event.pageX>400 && event.pageX<600 && event.pageY>780 && event.pageY<820)
 				{
 					window.location.reload();
+				}
+				else if(event.pageX>400 && event.pageX<670 && event.pageY>840 && event.pageY<900)
+				{
+					getHighScores();
+				}else if(event.pageX>130 && event.pageX<330 && event.pageY>840 && event.pageY<900)
+				{
+					submitScore();
 				}
 			}
 			
@@ -305,7 +314,6 @@
 				    }
 				  }
 				xmlhttp.open("POST","backend.php",true);
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 				xmlhttp.send("todo=post&person="+person+"&email="+email+"&score="+score);
 				xmlhttp.send();
 			}
@@ -337,8 +345,6 @@
 		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
-		<button style="float:right;postion:fixed;" onclick="submitScore()">Submit Score</button>
-		<button style="float:right;postion:fixed;" onclick="getHighScores()">Get High Score</button>
 		<br/>
 		<!--button onclick="setInterval(stream.roll,33);stream.gravity();setInterval(iceberg.create,2000);">start</button>
 		
