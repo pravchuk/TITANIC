@@ -283,7 +283,7 @@
 				setInterval(wave.create,2000);
 				setInterval(tyre.create,8000);
 			}
-			
+		
 		</script>
 	</head>
 	<body onkeypress="keys(event)" onload="init();start();" >
@@ -291,6 +291,9 @@
 		<canvas id="myCanvas" width="300" height="500" style="position:absolute;border:1px solid #000000;background-color:#008AE6">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
+		<button type="button" onclick="first()">
+		<img src="ship-up.png" alt="Play" />
+		<br />PLAY!</button>
 		<br/>
 		<!--button onclick="setInterval(stream.roll,33);stream.gravity();setInterval(iceberg.create,2000);">start</button>
 		
